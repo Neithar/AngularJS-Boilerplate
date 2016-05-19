@@ -1,47 +1,32 @@
-<h2 class="text-center">AngularJS Boilerplate</h2>
 
-<!-- slider directive -->
-<div myslider>
-    <ul class="slider">
-        <li class="image-slider">
-            <img src="https://unsplash.imgix.net/photo-1426200830301-372615e4ac54?fit=crop&fm=jpg&h=725&q=75&w=1050" alt="Image">
-        </li>
-        <li class="image-slider">
-            <img src="https://unsplash.imgix.net/photo-1421977870504-378093748ae6?fit=crop&fm=jpg&h=700&q=75&w=1050" alt="Image">
-        </li>
-        <li class="image-slider">
-            <img src="https://ununsplash.imgix.net/photo-1421757295538-9c80958e75b0?fit=crop&fm=jpg&h=700&q=75&w=1050" alt="Image">
-        </li>
-        <li class="image-slider">
-            <img src="https://unsplash.imgix.net/photo-1420745981456-b95fe23f5753?fit=crop&fm=jpg&h=700&q=75&w=1050" alt="Image">
-        </li>
-        <li class="image-slider">
-            <img src="https://download.unsplash.com/photo-1415871989540-61fe9268d3c8" alt="Image">
-        </li>
-    </ul>
-</div>
+<h2 class="text-center" ng-style='{"padding-top": "50px"}'></h2>
 
-<h3>Features</h3>
-<div class="container cf">
-    <div>
-        <ul>
-            <li>* SASS support including sourceMaps</li>
-            <li>* Minimal CSS styling of the view</li>
-            <li>* Gulp watch, build and local server tasks</li>
-            <li>* Responsive navigation</li>
-            <li>* Owl slider directive</li>
-            <li>* Responsive navigation</li>
-            <li>* localStorage service for set, get, remove data</li>
-            <li>* queryService $http wrapper to handle calls</li>
-            <li>* clear folder structure</li>
-            <li>* less than 10 request in build version</li>
-            <li>* minified CSS and JS build files</li>
-            <li>* google analytics snippet</li>
+<div ng-controller="MainController as vm" class="container">
+    <div class="text-center">
+        <h1>AngularJS - Pagination Example with logic like Google</h1>
+
+        <!-- items being paged -->
+        <div ng-repeat="item in vm.items" ng-style='{"color": "white"}'>
+            Item {{item}}
+        </div>
+
+        <!-- pager -->
+        <ul ng-if="vm.pager.pages.length" class="pagination">
+            <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                <a ng-click="vm.setPage(1)">First</a>
+            </li>
+            <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
+            </li>
+            <li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
+                <a ng-click="vm.setPage(page)">{{page}}</a>
+            </li>
+            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
+            </li>
+            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
+            </li>
         </ul>
     </div>
 </div>
-
-<div class="text-center">
-    <small>Images courtesy of <a target="_blank" href="http://unsplash.com">unsplash.com</a></small>
-</div>
-

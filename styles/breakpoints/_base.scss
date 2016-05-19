@@ -11,7 +11,13 @@ GENERAL STYLES
 body {
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-font-smoothing: antialiased;
-	background-color: $gray;
+	background-attachment: fixed;
+	background-color: $black !important;
+	background-repeat: repeat;
+	background-size: 100% auto;
+	height: 650px;
+	width: 100%;
+	margin-top: -35px;
 	color: $text-color;
 	font-family: $font;
 	font-size: 100%;
@@ -110,17 +116,24 @@ HEADER STYLES
 *********************/
 
 .header {
-	background-color: $white;
+	background-color: $black;
 }
 
 #inner-header {
+	background: rgba(36, 36, 36, 0.87) none repeat scroll 0 0;
+	box-shadow: 0 0 13px rgba(0,0,0,0.9);
+	height: 60px;
+	position: fixed;
+	top: 0;
 	width: 100%;
 	padding: 0 50px;
 	text-align: center;
+	z-index: 1;
+	-webkit-font-smoothing: subpixel-antialiased;
 
 	a {
 		font-size: $small;
-		color: $black;
+		color: $white;
 	}
 
 	ul {

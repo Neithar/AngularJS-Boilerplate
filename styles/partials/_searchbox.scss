@@ -1,0 +1,20 @@
+.advancedSearchBox { 
+  .search-parameter-suggestions {
+    .title {
+      display: block;
+      float: left;
+      height: 25px;
+      margin: 7px 7px 0 0;
+      background-color: transparent;
+      color: $black;
+      font-weight: 700;
+      padding: 0 5px;
+      font-size: 14px;
+      line-height: 25px;
+    }
+  }
+  .search-icon {
+    float: left !important;
+    padding: 10px 0 0 10px;
+  }
+}

@@ -17,7 +17,9 @@
    */
   angular
     .module('boilerplate', [
-      'ngRoute'
+      'ngRoute',
+      'ui.bootstrap',
+      'angular-advanced-searchbox'
     ])
     .config(config);
 
@@ -43,13 +45,8 @@
         controller: 'MainController',
         controllerAs: 'main'
       })
-      .when('/contact', {
-        templateUrl: 'views/contact.html',
-        controller: 'MainController',
-        controllerAs: 'main'
-      })
-      .when('/setup', {
-        templateUrl: 'views/setup.html',
+      .when('/detail', {
+        templateUrl: 'views/detail.html',
         controller: 'MainController',
         controllerAs: 'main'
       })
