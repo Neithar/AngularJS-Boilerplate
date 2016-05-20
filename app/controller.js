@@ -3,58 +3,49 @@
  *
  * You can use this controller for your whole app if it is small
  * or you can have separate controllers for each logical section
- * 
+ *
  */
-;(function() {
+;(function () {
 
-  angular
-    .module('boilerplate')
-    .controller('MainController', MainController);
+    angular
+        .module('boilerplate')
+        .controller('MainController', MainController);
 
-  MainController.$inject = ['LocalStorage', 'QueryService', 'pagerService', '$http', '$scope'];
+    MainController.$inject = ['LocalStorage', 'QueryService', '$http', '$scope'];
 
 
-  function MainController(LocalStorage, QueryService, pagerService, $scope) {
+    function MainController(LocalStorage, QueryService, $scope) {
 
-    // 'controller as' syntax
-    var self = this;
+        // 'controller as' syntax
+        var self = this;
 
-    self.dummyItems = _.range(1, 151); // dummy array of items to be paged
-    self.pager = {};
-    self.setPage = setPage;
-    self.setPage(1);
+        self.pager = {};
+        self.viewby = 5;
+        self.currentPage = 1;
+        self.itemsPerPage = self.viewby;
 
-      function setPage(page) {
-          if (page < 1 || page > self.pager.totalPages) {
-              return;
-          }
 
-          // get pager object from service
-          self.pager = pagerService.GetPager(self.dummyItems.length, page);
+        self.movies = QueryService.query('GET', 'movies', {}, {})
+            .then(function (success) {
+                self.dummyItems = success.data.response; // dummy array of items to be paged
+                self.totalItems = self.dummyItems.length;
+                return success.data.response;
+            }, function (error) {
+                return error;
+        });
 
-          // get current page of items
-          self.items = self.dummyItems.slice(self.pager.startIndex, self.pager.endIndex);
-      }
+        self.setPage = function (pageNo) {
+            self.currentPage = pageNo;
+        };
 
-    this.movies = QueryService.query('GET', 'movies', {}, {})
-        .then(function(data) {
-          console.log(data);
-        }, function(error) {
-        console.log(error);
-    });
+        self.pageChanged = function() {
+            console.log('Page changed to: ' + self.currentPage);
+        };
 
-    ////////////  function definitions
-      
-
-      /**
-     * Load some data
-     * @return {Object} Returned object
-     */
-    // QueryService.query('GET', 'posts', {}, {})
-    //   .then(function(ovocie) {
-    //     self.ovocie = ovocie.data;
-    //   });
-  }
-
+        self.setItemsPerPage = function(num) {
+            self.itemsPerPage = num;
+            self.currentPage = 1; //reset to first page
+        }
+    }
 
 })();
