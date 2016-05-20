@@ -2,12 +2,26 @@
 
 <div ng-controller="MainController as mc" class="container">
 
+    <!-- items being paged -->
+    <div ng-repeat="movie in mc.dummyItems" ng-style='{"color": "white"}'>Item {{movie}}</div>
 
-    <table class="table">
-        <tr ng-repeat="item in mc.dummyItems.slice(((mc.currentPage-1)*mc.itemsPerPage), ((mc.currentPage)*mc.itemsPerPage))" ng-style='{"color": "white"}'>
-            <td>{{item}}</td>
-        </tr>
-    </table>
-    <uib-pagination template-url="components/directives/pagination.html" total-items="mc.totalItems" ng-model="mc.currentPage" max-size="mc.maxSize" class="pagination-sm" boundary-links="true" rotate="false" num-pages="mc.numPages" items-per-page="mc.itemsPerPage"></uib-pagination>
+    <!-- pager -->
+    <ul ng-if="mc.pager.pages.length" class="pagination">
+        <li ng-class="{disabled:mc.pager.currentPage === 1}">
+            <a ng-click="mc.setPage(1)">First</a>
+        </li>
+        <li ng-class="{disabled:mc.pager.currentPage === 1}">
+            <a ng-click="mc.setPage(mc.pager.currentPage - 1)">Previous</a>
+        </li>
+        <li ng-repeat="page in mc.pager.pages" ng-class="{active:mc.pager.currentPage === page}">
+            <a ng-click="mc.setPage(page)">{{page}}</a>
+        </li>
+        <li ng-class="{disabled:mc.pager.currentPage === mc.pager.totalPages}">
+            <a ng-click="mc.setPage(mc.pager.currentPage + 1)">Next</a>
+        </li>
+        <li ng-class="{disabled:mc.pager.currentPage === mc.pager.totalPages}">
+            <a ng-click="mc.setPage(mc.pager.totalPages)">Last</a>
+        </li>
+    </ul>
 
 </div>

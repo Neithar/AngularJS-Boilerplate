@@ -11,7 +11,7 @@
   angular
   	.module('boilerplate')
     .constant('CONSTANTS', {
-      'API_URL': 'http://192.168.1.148:3000/'
+      'API_URL': 'http://192.168.1.100:3000/'
     });
 
 

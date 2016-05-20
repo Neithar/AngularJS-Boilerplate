@@ -11,40 +11,49 @@
         .module('boilerplate')
         .controller('MainController', MainController);
 
-    MainController.$inject = ['LocalStorage', 'QueryService', '$http', '$scope'];
+    MainController.$inject = ['LocalStorage', 'QueryService', 'pagerService', '$http', '$scope'];
 
 
-    function MainController(LocalStorage, QueryService, $scope) {
+    function MainController(LocalStorage, QueryService, pagerService, $scope) {
 
         // 'controller as' syntax
         var self = this;
 
-        self.pager = {};
-        self.viewby = 5;
+        self.viewby = 25;
         self.currentPage = 1;
         self.itemsPerPage = self.viewby;
+        self.maxSize = 5
+        self.pager = {};
+        self.setPage = setPage;
 
-
-        self.movies = QueryService.query('GET', 'movies', {}, {})
+        self.movies = QueryService.query('GET', 'movies', {'page': self.currentPage}, {})
             .then(function (success) {
                 self.dummyItems = success.data.response; // dummy array of items to be paged
-                self.totalItems = self.dummyItems.length;
+                self.totalItems = success.data.pagination.count;
+                self.setPage(1);
                 return success.data.response;
             }, function (error) {
                 return error;
-        });
+            });
 
-        self.setPage = function (pageNo) {
-            self.currentPage = pageNo;
-        };
+        function setPage(page) {
+            if (page < 1 || page > self.pager.totalPages) {
+                return;
+            }
+            self.page = page;
 
-        self.pageChanged = function() {
-            console.log('Page changed to: ' + self.currentPage);
-        };
+            // get pager object from service
+            self.pager = pagerService.GetPager(self.totalItems, page);
 
-        self.setItemsPerPage = function(num) {
-            self.itemsPerPage = num;
-            self.currentPage = 1; //reset to first page
+            // get current page of items
+            self.movies =
+                QueryService.query('GET', 'movies', {'page': self.page}, {})
+                    .then(function (success) {
+                        self.dummyItems = success.data.response; // dummy array of items to be paged
+                        return success.data.response;
+                    }, function (error) {
+                        return error;
+                    });
         }
     }
 
